@@ -1,5 +1,7 @@
 # Student ID: 011010779
 
+# Overall time complexity is O(n^2)
+
 from project_package.package import load_csv_packages, PackageStatus
 from project_package.truck import Truck
 from project_package.hash_table import HashTable
@@ -13,11 +15,11 @@ NUMBER_OF_TRUCKS = 3
 
 if __name__ == "__main__":
     hash_table = HashTable() # creates a hash table
-    package_list = load_csv_packages() # instantiates all of the packages
+    package_list = load_csv_packages() # instantiates all of the packages, O(n)
     for package in package_list:
         hash_table.add(package.id, package) # adds each package object to the hash table
     truck_list = [] # empty list to hold truck objects
-    for i in range(NUMBER_OF_TRUCKS): # this loop is easily scalable if the number of trucks changes
+    for i in range(NUMBER_OF_TRUCKS): # this loop is easily scalable if the number of trucks changes, O(n)
         truck_list.append(Truck(i+1))
 
     # Setting departure times for the first 2 trucks
@@ -31,7 +33,7 @@ if __name__ == "__main__":
     truck2_manual_package_ids = [3, 4, 5, 6, 8, 18, 19, 21, 24, 25, 26, 28, 32, 33, 36, 38]
     truck3_manual_package_ids = [2, 7, 9, 10, 11, 12, 17, 22, 23, 27, 35, 39]
     
-    # Adding packages chosen above to each truck's onboard package list
+    # Adding packages chosen above to each truck's onboard package list, O(n)
     for package_id in truck1_manual_package_ids:
         truck_list[0].add_package(package_list[package_id - 1])
         package_list[package_id - 1].truck_number = 1
@@ -42,13 +44,13 @@ if __name__ == "__main__":
         truck_list[2].add_package(package_list[package_id - 1])
         package_list[package_id - 1].truck_number = 3
 
-    # Setting departure time for each package on the first 2 trucks
+    # Setting departure time for each package on the first 2 trucks, O(n)
     for package in truck_list[0].onboard_package_list:
         package.departure_time = truck_list[0].departure_time
     for package in truck_list[1].onboard_package_list:
         package.departure_time = truck_list[1].departure_time
 
-    # Reading the address and distance files
+    # Reading the address and distance files, O(n)
     with open(r"project_package\data\Addresses.csv") as file:
         address_list = list(csv.reader(file))
     with open(r"project_package\data\Distances.csv") as file:
@@ -67,11 +69,11 @@ if __name__ == "__main__":
             if address in row[2]:
                 return int(row[0])
     
-    # Assigning the address ID (0 through 26) to all of the packages
+    # Assigning the address ID (0 through 26) to all of the packages, O(n)
     for package in package_list:
         package.address_id = address_id_converter(package.address)
     
-    # ALGORITHM SEGMENT --------------------------------
+    # ALGORITHM SEGMENT, O(n^2)
     # Using closest neighbor algorithm to build the queue for each truck and make the deliveries
     def make_deliveries(truck):
         current_address_id = 0 # starts at the hub
@@ -130,7 +132,7 @@ if __name__ == "__main__":
     for truck in truck_list:
         total_distance_all_trucks += truck.mileage
 
-    # USER INTERFACE SEGMENT
+    # USER INTERFACE SEGMENT, O(n)
     print("\n\n----- WGUPS -----\n\n")
     print("Total distance traveled for all trucks: " + str(total_distance_all_trucks) + " miles.\n")
 

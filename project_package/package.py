@@ -6,9 +6,10 @@ This file involves all the classes and functions related to the actual packages 
 Includes the reading of the WGUPS Package File, the instantiation of packages, and a way to keep track of the status of each.
 """
 
-# This class will have 40 instantiations, called from the load_csv_packages() function
+# Overall time complexity is O(n)
+
 class Package:
-    def __init__(self, id: int, address: str, city: str, state: str, zip: int, deadline, weight: int, note: str = None):
+    def __init__(self, id: int, address: str, city: str, state: str, zip: int, deadline, weight: int, note: str = None): # O(1)
         self.status = PackageStatus.WAITING
         self.id = id
         self.address = address
@@ -24,7 +25,7 @@ class Package:
         self.truck_number = None
 
     # Defining an easy way to determine the package's ID, truck number, and status
-    def __str__(self):
+    def __str__(self): # O(1)
         if self.status == PackageStatus.DELIVERED:
             return f"Package {self.id} was delivered at {(self.delivery_time).strftime('%I:%M%p').lower()} by truck {self.truck_number}."
         elif self.delivery_time is None:
@@ -33,7 +34,7 @@ class Package:
             return f"Package {self.id} is {self.status.value} on truck {self.truck_number}. It is scheduled for delivery at {(self.delivery_time).strftime('%I:%M%p').lower()}."
 
     # Defining a function to update the hash table with the status of the package based on the user's requested time input
-    def update(self, hash_table, user_time):
+    def update(self, hash_table, user_time): # O(1)
         if user_time < self.departure_time:
             self.status = PackageStatus.WAITING
         elif user_time > self.delivery_time:
@@ -43,14 +44,14 @@ class Package:
         hash_table.add(self.id, self)
         
 # For scalability, defining an enumeration for the status of the packages
-class PackageStatus(Enum):
+class PackageStatus(Enum): # O(1)
     WAITING = "waiting to be shipped"
     TRANSIT = "in transit"
     DELIVERED = "delivered"
 
 # This one-time function will read through the CSV WGUPS Package File and
 # instantiate a Package object for each row, and will add the objects to a returned list
-def load_csv_packages() -> list:
+def load_csv_packages() -> list: # O(n)
     package_list = [] # create an empty list to hold the instantiated packages
 
     with open(r"project_package/data/Packages.csv", mode='r', newline='') as file:  # open and read the CSV file
