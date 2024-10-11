@@ -1,5 +1,4 @@
 from enum import Enum
-from datetime import datetime, timedelta
 import csv
 
 """
@@ -22,16 +21,18 @@ class Package:
         self.note = note
         self.departure_time = None
         self.delivery_time = None
+        self.truck_number = None
 
-    # Defining an easy way to determine the package's ID and its status with a simple call
+    # Defining an easy way to determine the package's ID, truck number, and status
     def __str__(self):
         if self.status == PackageStatus.DELIVERED:
-            return f"Package {self.id} was delivered at {(self.delivery_time).strftime('%I:%M%p').lower()}."
+            return f"Package {self.id} was delivered at {(self.delivery_time).strftime('%I:%M%p').lower()} by truck {self.truck_number}."
         elif self.delivery_time is None:
-            return f"Package {self.id} status is {self.status.value} and delivery time is not set."
+            return f"Package {self.id} status is {self.status.value} and the delivery time is not set."
         else:
-            return f"Package {self.id} is {self.status.value}. It is scheduled for delivery at {(self.delivery_time).strftime('%I:%M%p').lower()}."
+            return f"Package {self.id} is {self.status.value} on truck {self.truck_number}. It is scheduled for delivery at {(self.delivery_time).strftime('%I:%M%p').lower()}."
 
+    # Defining a function to update the hash table with the status of the package based on the user's requested time input
     def update(self, hash_table, user_time):
         if user_time < self.departure_time:
             self.status = PackageStatus.WAITING
@@ -41,21 +42,21 @@ class Package:
             self.status = PackageStatus.TRANSIT
         hash_table.add(self.id, self)
         
-# For simplicity, defining an enumeration for the status of the packages
+# For scalability, defining an enumeration for the status of the packages
 class PackageStatus(Enum):
     WAITING = "waiting to be shipped"
     TRANSIT = "in transit"
     DELIVERED = "delivered"
 
-# This one-time function will read through the CSV WGUPS Package File
-# It will then instantiate a Package object for each row and add the objects to a returned list
+# This one-time function will read through the CSV WGUPS Package File and
+# instantiate a Package object for each row, and will add the objects to a returned list
 def load_csv_packages() -> list:
-    package_list = [] # creating an empty list to hold the instantiated packages
+    package_list = [] # create an empty list to hold the instantiated packages
 
-    with open(r"project_package/data/Packages.csv", mode='r', newline='') as file:  # Open and read the CSV file
+    with open(r"project_package/data/Packages.csv", mode='r', newline='') as file:  # open and read the CSV file
         reader = csv.reader(file)
 
-        for row in reader:  # Iterate through each row in the CSV
+        for row in reader:  # iterate through each row in the CSV
             id = int(row[0])
             address = row[1]
             city = row[2]
@@ -65,8 +66,7 @@ def load_csv_packages() -> list:
             weight = int(row[6])
             note = row[7] if len(row) > 7 else None
 
-            package = Package(id, address, city, state, zip_code, deadline, weight, note) # creating a Package instance
+            package = Package(id, address, city, state, zip_code, deadline, weight, note) # create a Package instance
             package_list.append(package)
 
     return package_list # for main.py to work with
-

@@ -1,16 +1,11 @@
 # For add, get, delete functions, time complexity is O(1)
 
-
-# Using constants for easy changes to values in the future
+# Using constants for quick changes in the future (scalability)
 TABLE_SIZE = 32 # chosen to allow for collisions to demonstrate collision handling
-
-"""
-This file involves ____________________
-"""
 
 class HashTable:
     def __init__(self):
-        self.table = [[] for _ in range(TABLE_SIZE)] # this creates a list of lists to handle collisions later
+        self.table = [[] for _ in range(TABLE_SIZE)] # create a list of lists to handle collisions later
 
     # Basic hash function guaranteed to create collisions at some point
     def _generate_hash(self, key):
@@ -24,11 +19,11 @@ class HashTable:
         for key_value in self.table[index]:
             if key_value[0] == key:
                 key_value[1] = value
-                # print(f"Package with ID of '{key}' successfully updated with new value.")
+                # print(f"Package with ID of '{key}' successfully updated with new value.") # optional
                 return
             
         self.table[index].append(pair) # adds the key,value pair to the list at the hashed index
-        # print(f"Package with ID of '{key}' added successfully.")
+        # print(f"Package with ID of '{key}' added successfully.") # optional
 
     # REQUIREMENT B FOR TASK 2
     def retrieve(self, key): # the key is the Package ID
@@ -36,8 +31,8 @@ class HashTable:
         # Searching through the list at the resulting index in the hash table
         for key_value in self.table[index]:
             if key_value[0] == key:
-                # print(f"Package with ID of '{key}' retrieved.")
-                return key_value[1] # the resulting value
+                # print(f"Package with ID of '{key}' retrieved.") # optional
+                return key_value[1] # the resulting package object
         print(f"Package with ID of '{key}' not found.")
         return None  # If the key is not found, or if the hash table is empty at that index, returns None
 
@@ -56,6 +51,6 @@ class HashTable:
     # A function to print all the elements of the hash table
     def display(self):
         for nested in self.table:
-            if nested:  # Checks if the hash table is populated at that index
+            if nested:  # check if the hash table is populated at that index
                 for key_value in nested:
                     print(f"Key '{key_value[0]}', Value '{key_value[1]}'")
