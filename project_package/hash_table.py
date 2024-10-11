@@ -9,7 +9,7 @@ TABLE_SIZE = 32 # chosen to allow for collisions to demonstrate collision handli
 
 class HashTable:
     def __init__(self): # O(n)
-        self.table = [[] for _ in range(TABLE_SIZE)] # create a list of lists to handle collisions later
+        self.table = [[] for _ in range(TABLE_SIZE)] # create a list of lists to handle collisions later; allows for self-adjusting behavior via chaining
 
     # Basic hash function guaranteed to create collisions at some point
     def _generate_hash(self, key): # O(1)
@@ -29,7 +29,6 @@ class HashTable:
         self.table[index].append(pair) # adds the key,value pair to the list at the hashed index
         # print(f"Package with ID of '{key}' added successfully.") # optional
 
-    # REQUIREMENT B FOR TASK 2
     def retrieve(self, key): # O(n) worst-case; the key is the Package ID
         index = self._generate_hash(key) # AKA the hash of the key
         # Searching through the list at the resulting index in the hash table

@@ -27,11 +27,20 @@ class Package:
     # Defining an easy way to determine the package's ID, truck number, and status
     def __str__(self): # O(1)
         if self.status == PackageStatus.DELIVERED:
-            return f"Package {self.id} was delivered at {(self.delivery_time).strftime('%I:%M%p').lower()} by truck {self.truck_number}."
+            if self.deadline == "EOD":
+                return f"Package {self.id} was delivered at {(self.delivery_time).strftime('%I:%M%p').lower()} by truck {self.truck_number}."
+            else:
+                return f"Package {self.id} with a deadline of {self.deadline} was delivered at {(self.delivery_time).strftime('%I:%M%p').lower()} by truck {self.truck_number}."
         elif self.delivery_time is None:
-            return f"Package {self.id} status is {self.status.value} and the delivery time is not set."
+            if self.deadline == "EOD":
+                return f"Package {self.id} status is {self.status.value} and the delivery time is not set."
+            else:
+                return f"Package {self.id} status is {self.status.value} with a deadline of {self.deadline} and the delivery time is not set."
         else:
-            return f"Package {self.id} is {self.status.value} on truck {self.truck_number}. It is scheduled for delivery at {(self.delivery_time).strftime('%I:%M%p').lower()}."
+            if self.deadline == "EOD":
+                return f"Package {self.id} is {self.status.value} on truck {self.truck_number}. It is scheduled for delivery at {(self.delivery_time).strftime('%I:%M%p').lower()}."
+            else:
+                return f"Package {self.id} is {self.status.value} on truck {self.truck_number}. Its deadline is {self.deadline} and it is scheduled for delivery at {(self.delivery_time).strftime('%I:%M%p').lower()}."
 
     # Defining a function to update the hash table with the status of the package based on the user's requested time input
     def update(self, hash_table, user_time): # O(1)

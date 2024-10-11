@@ -136,6 +136,10 @@ if __name__ == "__main__":
     print("\n\n----- WGUPS -----\n\n")
     print("Total distance traveled for all trucks: " + str(total_distance_all_trucks) + " miles.\n")
 
+    print("Truck 1 departure time: " + (truck_list[0].departure_time).strftime('%I:%M%p').lower())
+    print("Truck 2 departure time: " + (truck_list[1].departure_time).strftime('%I:%M%p').lower())
+    print("Truck 3 departure time: " + (truck_list[2].departure_time).strftime('%I:%M%p').lower() + "\n")
+
     # Creating a loop to obtain user input until they are finished with their entries
     while True:
         while True:
