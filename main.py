@@ -151,24 +151,27 @@ if __name__ == "__main__":
                 print("Invalid entry. Try again.")
         
         while True:
-            user_input = input('Type "all" to see the status of all packages. To see the status of a single package, enter the package ID number.\n').lower()
-            if user_input == 'all': # for all packages
+            user_input = input('Type "all" to see the summarized status of all packages. Type "all with details" to see detailed attributes of every package.\nTo see the status and detailed attributes of a single package, enter the package ID number.\n').lower()
+            if user_input == 'all' or user_input == "all with details": # for all packages
                 for package in package_list:
                     specified_package = hash_table.retrieve(package.id) # retrieves the package instance via the hash table
                     specified_package.update(hash_table, user_time) # updates the package instance to reflect the user-entered time
-                    print(str(specified_package))
+                    if user_input == "all":
+                        print(specified_package.print_summary())
+                    else:
+                        print(specified_package.print_all_details())
                 break
             else: # for a single package instance
                 try: # checking validity of user input
                     id_of_package = int(user_input)
                     specified_package = hash_table.retrieve(int(id_of_package)) # retrieves the package instance via the hash table
                     specified_package.update(hash_table, user_time) # updates the package instance to reflect the user-entered time
-                    print(str(specified_package))
+                    print(specified_package.print_all_details())
                     break
                 except ValueError:
                     print("Invalid entry. Try again.")
 
-        user_input = input('Type "exit" to end the program, or enter a blank line to restart.\n').lower()
+        user_input = input('\nType "exit" to end the program, or enter a blank line to restart.\n').lower()
         if user_input == 'exit':
             exit()
         else:

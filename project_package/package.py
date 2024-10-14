@@ -18,29 +18,38 @@ class Package:
         self.state = state
         self.zip = zip
         self.deadline = deadline
-        self.weight = weight
+        self.weight = weight # kgs
         self.note = note
         self.departure_time = None
         self.delivery_time = None
         self.truck_number = None
 
-    # Defining an easy way to determine the package's ID, truck number, and status
-    def __str__(self): # O(1)
+    # Defining a function that prints basic information for the UI, such as package ID, address, delivery status, truck number, and delivery time (if applicable)
+    def print_summary(self): # O(1)
         if self.status == PackageStatus.DELIVERED:
             if self.deadline == "EOD":
-                return f"Package {self.id} was delivered at {(self.delivery_time).strftime('%I:%M%p').lower()} by truck {self.truck_number}."
+                return f"Package {self.id} was delivered to {self.address} at {(self.delivery_time).strftime('%I:%M%p').lower()} by truck {self.truck_number}."
             else:
-                return f"Package {self.id} with a deadline of {self.deadline} was delivered at {(self.delivery_time).strftime('%I:%M%p').lower()} by truck {self.truck_number}."
+                return f"Package {self.id} with a deadline of {self.deadline} was delivered to {self.address} at {(self.delivery_time).strftime('%I:%M%p').lower()} by truck {self.truck_number}."
         elif self.delivery_time is None:
             if self.deadline == "EOD":
-                return f"Package {self.id} status is {self.status.value} and the delivery time is not set."
+                return f"Package {self.id} status is {self.status.value} and the delivery time to {self.address} is not set."
             else:
-                return f"Package {self.id} status is {self.status.value} with a deadline of {self.deadline} and the delivery time is not set."
+                return f"Package {self.id} status is {self.status.value} with a deadline of {self.deadline} and the delivery time to {self.address} is not set."
         else:
             if self.deadline == "EOD":
-                return f"Package {self.id} is {self.status.value} on truck {self.truck_number}. It is scheduled for delivery at {(self.delivery_time).strftime('%I:%M%p').lower()}."
+                return f"Package {self.id} is {self.status.value} on truck {self.truck_number}. It is scheduled for delivery to {self.address} at {(self.delivery_time).strftime('%I:%M%p').lower()}."
             else:
-                return f"Package {self.id} is {self.status.value} on truck {self.truck_number}. Its deadline is {self.deadline} and it is scheduled for delivery at {(self.delivery_time).strftime('%I:%M%p').lower()}."
+                return f"Package {self.id} is {self.status.value} on truck {self.truck_number}. Its deadline is {self.deadline} and it is scheduled for delivery to {self.address} at {(self.delivery_time).strftime('%I:%M%p').lower()}."
+    
+    # Defining a function that will print all of the attributes of a specified package
+    def print_all_details(self): # O(1)
+        if self.status.value == "delivered":
+            return f"\nPackage {self.id} Details\nStatus: {self.status.value}\nTruck Number: {self.truck_number}\nAddress: {self.address}, {self.city}, {self.state} {self.zip}\nDeadline: {self.deadline}\nWeight: {self.weight} kgs\nNotes: {self.note}\nDeparture Time: {(self.departure_time).strftime('%I:%M%p').lower()}\nDelivery Time: {(self.delivery_time).strftime('%I:%M%p').lower()}"
+        elif self.status.value == "in transit":
+            return f"\nPackage {self.id} Details\nStatus: {self.status.value}\nTruck Number: {self.truck_number}\nAddress: {self.address}, {self.city}, {self.state} {self.zip}\nDeadline: {self.deadline}\nWeight: {self.weight} kgs\nNotes: {self.note}\nDeparture Time: {(self.departure_time).strftime('%I:%M%p').lower()}\nPlanned Delivery Time: {(self.delivery_time).strftime('%I:%M%p').lower()}"
+        elif self.status.value == "waiting to be shipped":
+            return f"\nPackage {self.id} Details\nStatus: {self.status.value}\nTruck Number: {self.truck_number}\nAddress: {self.address}, {self.city}, {self.state} {self.zip}\nDeadline: {self.deadline}\nWeight: {self.weight} kgs\nNotes: {self.note}\nPlanned Departure Time: {(self.departure_time).strftime('%I:%M%p').lower()}\nPlanned Delivery Time: {(self.delivery_time).strftime('%I:%M%p').lower()}"
 
     # Defining a function to update the hash table with the status of the package based on the user's requested time input
     def update(self, hash_table, user_time): # O(1)
