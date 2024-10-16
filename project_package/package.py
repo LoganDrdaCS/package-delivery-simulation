@@ -1,5 +1,6 @@
 from enum import Enum
 import csv
+from datetime import datetime
 
 """
 This file involves all the classes and functions related to the actual packages that need to be delivered.
@@ -53,14 +54,34 @@ class Package:
 
     # Defining a function to update the hash table with the status of the package based on the user's requested time input
     def update(self, hash_table, user_time): # O(1)
+        time_to_update_at = datetime.strptime("10:20am", "%I:%M%p") # check to see if Package 9 address needs updating
         if user_time < self.departure_time:
             self.status = PackageStatus.WAITING
         elif user_time > self.delivery_time:
             self.status = PackageStatus.DELIVERED
         else:
             self.status = PackageStatus.TRANSIT
-        hash_table.add(self.id, self)
-        
+        if self.id == 9 and user_time >= time_to_update_at:
+            correct_package9(self, hash_table)
+        elif self.id == 9 and user_time < time_to_update_at:
+            decorrect_package9(self, hash_table)
+        else:
+            hash_table.add(self.id, self)
+
+# Defining a function to correct the wrong address listed for Package 9 at 10:20am:
+def correct_package9(package9: Package, hash_table): #O(1)
+    package9.address = "410 S State St"
+    package9.address_id = 19
+    package9.zip = 84111
+    hash_table.add(package9.id, package9)
+
+# Defining a function to de-correct the address listed for Package 9 if before 10:20am:
+def decorrect_package9(package9: Package, hash_table): #O(1)
+    package9.address = "300 State St"
+    package9.address_id = 12
+    package9.zip = 84103
+    hash_table.add(package9.id, package9)
+    
 # For scalability, defining an enumeration for the status of the packages
 class PackageStatus(Enum): # O(1)
     WAITING = "waiting to be shipped"

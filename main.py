@@ -2,7 +2,7 @@
 
 # Overall time complexity is O(n^2)
 
-from project_package.package import load_csv_packages, PackageStatus
+from project_package.package import load_csv_packages, PackageStatus, correct_package9
 from project_package.truck import Truck
 from project_package.hash_table import HashTable
 import csv
@@ -76,6 +76,8 @@ if __name__ == "__main__":
     # ALGORITHM SEGMENT, O(n^2)
     # Using closest neighbor algorithm to build the queue for each truck and make the deliveries
     def make_deliveries(truck):
+        if truck.id == 3:
+            correct_package9(package_list[8], hash_table) # update delivery address for package 9
         current_address_id = 0 # starts at the hub
         while truck.onboard_package_list:
             least_distance = 1000 # arbitrary distance greater than any expected value
