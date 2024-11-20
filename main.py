@@ -1,5 +1,3 @@
-# Student ID: 011010779
-
 # Overall time complexity is O(n^2)
 
 from project_package.package import load_csv_packages, PackageStatus, correct_package9
@@ -14,8 +12,8 @@ NUMBER_OF_TRUCKS = 3
 # --------------------------------------------------------------------------------------------------- #
 
 if __name__ == "__main__":
-    hash_table = HashTable() # creates a hash table
-    package_list = load_csv_packages() # instantiates all of the packages, O(n)
+    hash_table = HashTable()  # Initializes an empty hash table for storing package data
+    package_list = load_csv_packages()  # Loads and returns a list of all packages from CSV file, O(n)
     for package in package_list:
         hash_table.add(package.id, package) # adds each package object to the hash table
     truck_list = [] # empty list to hold truck objects
@@ -23,12 +21,12 @@ if __name__ == "__main__":
         truck_list.append(Truck(i+1))
 
     # Setting departure times for the first 2 trucks
-    truck_list[0].departure_time = datetime.strptime("8:00am", "%I:%M%p")
-    truck_list[1].departure_time = datetime.strptime("9:05am", "%I:%M%p")
+    truck_list[0].departure_time = datetime.strptime("8:00am", "%I:%M%p") # First truck departs at 8:00am
+    truck_list[1].departure_time = datetime.strptime("9:05am", "%I:%M%p") # Second truck departs at 9:05am
     truck_list[0].time = truck_list[0].departure_time
     truck_list[1].time = truck_list[1].departure_time
 
-    # Manually creating lists of package IDs which will go on each truck (unordered for now)
+    # Manually creating lists of package IDs which will go on each truck (unordered)
     truck1_manual_package_ids = [1, 13, 14, 15, 16, 20, 29, 30, 31, 34, 37, 40]
     truck2_manual_package_ids = [3, 4, 5, 6, 8, 18, 19, 21, 24, 25, 26, 28, 32, 33, 36, 38]
     truck3_manual_package_ids = [2, 7, 9, 10, 11, 12, 17, 22, 23, 27, 35, 39]
@@ -58,9 +56,9 @@ if __name__ == "__main__":
     
     # Defining a function to calculate distance between addresses
     def distance_calculator(x, y):
-        distance = distance_list[x][y]
+        distance = distance_list[x][y] # Retrieves the direct distance from the address matrix
         if distance == '':
-            distance = distance_list[y][x] # flips the coordinates to account for the blank spaces
+            distance = distance_list[y][x] # Flips the coordinates to account for the blank spaces
         return float(distance)
     
     # Defining a function to return the address ID (0 through 26) from an address specified
@@ -73,7 +71,7 @@ if __name__ == "__main__":
     for package in package_list:
         package.address_id = address_id_converter(package.address)
     
-    # ALGORITHM SEGMENT, O(n^2)
+    # ALGORITHM SEGMENT, O(n^2) due to nested loop over the packages to find the nearest neighbor
     # Using closest neighbor algorithm to build the queue for each truck and make the deliveries
     def make_deliveries(truck):
         if truck.id == 3:

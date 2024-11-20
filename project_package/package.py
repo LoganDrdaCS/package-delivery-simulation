@@ -4,14 +4,14 @@ from datetime import datetime
 
 """
 This file involves all the classes and functions related to the actual packages that need to be delivered.
-Includes the reading of the WGUPS Package File, the instantiation of packages, and a way to keep track of the status of each.
+Includes the reading of the Package File, the instantiation of packages, and a way to keep track of the status of each.
 """
 
 # Overall time complexity is O(n)
 
 class Package:
     def __init__(self, id: int, address: str, city: str, state: str, zip: int, deadline, weight: int, note: str = None): # O(1)
-        self.status = PackageStatus.WAITING
+        self.status = PackageStatus.WAITING # Initial package status: waiting to be shipped
         self.id = id
         self.address = address
         self.address_id = None
@@ -62,7 +62,7 @@ class Package:
         else:
             self.status = PackageStatus.TRANSIT
         if self.id == 9 and user_time >= time_to_update_at:
-            correct_package9(self, hash_table)
+            correct_package9(self, hash_table) # Special update for package 9's address at 10:20am
         elif self.id == 9 and user_time < time_to_update_at:
             decorrect_package9(self, hash_table)
         else:

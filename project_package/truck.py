@@ -15,8 +15,8 @@ Includes enumerations for truck status, and also a way to add packages to a truc
 # Creating the Truck class. Each will start at the hub.
 class Truck: # O(1)
     def __init__(self, id: int):
-        self.status = TruckStatus.HUB
-        self.location = "4001 South 700 East"
+        self.status = TruckStatus.HUB # Initial status, at the hub
+        self.location = "4001 South 700 East" # Default hub location
         self.mileage = 0
         self.departure_time = None
         self.time = None
