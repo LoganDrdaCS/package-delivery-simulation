@@ -1,20 +1,14 @@
 # Package Delivery Simulation
 
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li><a href="#about-the-project">About The Project</a></li>
-    <li><a href="#algorithm">Algorithm</a></li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ol>
-</details>
+## Table of Contents
+- [About the Project](#about-the-project)
+- [Algorithm](#algorithm)
+- [Usage](#usage)
+- [License](#license)
+- [Contact](#contact)
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-
 This project simulates a fleet of trucks that deliver packages to various addresses. It efficiently manages the distribution of packages across multiple trucks, calculating optimal delivery routes using the closest neighbor algorithm and providing real-time tracking updates for each package. The project implements the following functionalities:
 
 - Load packages and assign them to trucks.
@@ -26,7 +20,6 @@ The system supports multiple trucks and packages, calculating delivery times and
 
 <!-- ALGORITHM -->
 ## Algorithm
-
 The system uses the Nearest Neighbor Algorithm to determine the optimal route for each truck. This approach ensures that:
 
 1. The truck starts at the hub.
@@ -43,7 +36,6 @@ Key Features:
 
 <!-- USAGE -->
 ## Usage
-
 After running the program, the system will print out details about the truck departure times and the total mileage traveled for all trucks. You can interact with the system by entering specific times to check the status of packages or all packages. Use the following inputs:
 
 - **"hh:mm am/pm"**: Enter a time to query the status of a package.
@@ -73,7 +65,6 @@ After running the program, you'll be prompted to interact with the system and qu
 
 <!-- CODE STRUCTURE -->
 # Code Structure
-
 The project is divided into several modules, each handling different aspects of the system:
 
 ### `main.py`
@@ -101,13 +92,10 @@ The project is divided into several modules, each handling different aspects of 
 *   **Addresses.csv**: Contains a list of all possible addresses.
 *   **Distances.csv**: Contains the distance matrix for each address.
 
-
 <!-- License -->
-## License
-
-This project is licensed under the MIT License.
+## License:
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 <!-- CONTACT -->
 ## Contact
-
 Logan Drda - logan.drda.cs@gmail.com
