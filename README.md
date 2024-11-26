@@ -3,17 +3,18 @@
 ## Table of Contents
 - [About the Project](#about-the-project)
 - [Algorithm](#algorithm)
+- [Key Features](#key-features)
 - [Usage](#usage)
 - [License](#license)
 - [Contact](#contact)
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-This project simulates a fleet of trucks that deliver packages to various addresses. It efficiently manages the distribution of packages across multiple trucks, calculating optimal delivery routes using the closest neighbor algorithm and providing real-time tracking updates for each package. The project implements the following functionalities:
+This project simulates a fleet of trucks that deliver packages to various addresses. It efficiently manages the distribution of packages across multiple trucks, calculating optimal delivery routes using the nearest-neighbor algorithm and providing time-based tracking updates for each package. The project implements the following functionalities:
 
 - Load packages and assign them to trucks.
-- Use the nearest neighbor algorithm to route each truck for deliveries.
-- Update package status in real time as deliveries are made.
+- Use the nearest-neighbor algorithm to route each truck for deliveries.
+- Update package status based on the time of delivery.
 - Allow users to query package status by entering a specific time.
 
 The system supports multiple trucks and packages, calculating delivery times and distance traveled. The user can query the system to check the status of a package or all packages at any given time.
@@ -27,25 +28,23 @@ The system uses the Nearest Neighbor Algorithm to determine the optimal route fo
 1. The truck continues picking the closest remaining package until all deliveries are made.
 1. After completing deliveries, the truck returns to the hub.
 
-Key Features:
-
-- **Self-adjusting Heuristic Algorithm**: The core of the simulation, which adjusts delivery routes and truck schedules in response to changing conditions like package priority, truck availability, and real-time traffic data. This approach improves delivery efficiency by constantly optimizing the assignment of packages to trucks.
-- **Real-time Package Status Updates**: View the current status of a specific package (e.g., in transit, delivered, or delayed).
-- **Time Complexity**: The main delivery algorithm runs in O(n^2), where n is the number of packages on each truck. This complexity arises from checking each package to find the closest one.
-- **Scalability**: The system is designed to be easily scalable by adjusting the number of trucks and packages.
+<!-- KEY FEATURES -->
+## Key Features:
+- **Greedy Nearest-Neighbor Algorithm**: The core algorithm routes trucks by selecting the closest unvisited package, ensuring efficient delivery paths.
+- **Time-based Package Status Updates**: Users can query the status of a specific package at a given time (e.g., in transit, delivered, or delayed).
+- **Time Complexity**: The main delivery algorithm runs in O(n^2), where n is the number of packages on each truck, due to finding the closest neighbor for each package.
+- **Scalability**: The system is designed to easily accommodate additional trucks and packages.
 
 <!-- USAGE -->
 ## Usage
-After running the program, the system will print out details about the truck departure times and the total mileage traveled for all trucks. You can interact with the system by entering specific times to check the status of packages or all packages. Use the following inputs:
+After running the program, the system will print out details about truck departure times and total mileage traveled. Users can query package status by entering specific times, view the status of all packages, or check a particular package by ID using the following inputs:
 
 - **"hh:mm am/pm"**: Enter a time to query the status of a package.
 - **"all"**: View the summarized status of all packages.
 - **"all with details"**: View detailed attributes of every package.
 - **Package ID**: Query a single package by entering its ID.
 
-To exit the program, type **"exit"** when prompted.
-
-After running the program, you'll be prompted to interact with the system and query the status of packages or trucks. The program will provide real-time feedback based on the time you query, allowing you to track packages and trucks effectively. You can also modify the CSV files to add new packages or change the truck routes, making this system adaptable for different scenarios.
+The program will provide time-based feedback based on the time you query, allowing you to track packages and trucks effectively. Additionally, you can modify the CSV files to add new packages or change truck routes, making the system adaptable for different scenarios.
 
 **Demo screenshot of using "all":**
 
